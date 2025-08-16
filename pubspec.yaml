@@ -2,11 +2,9 @@ name: error
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
-
 environment:
   sdk: ^3.8.0
   flutter: ">=1.17.0"
-
 dependencies:
   dio: ^5.8.0+1
   json_annotation: ^4.8.1
