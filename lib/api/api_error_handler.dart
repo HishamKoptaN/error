@@ -1,0 +1,50 @@
+import 'api_error_model.dart';
+import 'package:dio/dio.dart';
+
+class ApiErrorHandler {
+  static ApiErrorModel handle({required dynamic error}) {
+    if (error is DioException) {
+      switch (error.type) {
+        case DioExceptionType.connectionError:
+          return ApiErrorModel(error: "Connection to server failed");
+        case DioExceptionType.cancel:
+          return ApiErrorModel(error: "Request to the server was cancelled");
+        case DioExceptionType.connectionTimeout:
+          return ApiErrorModel(error: "Connection timeout with the server");
+        case DioExceptionType.unknown:
+          return ApiErrorModel(
+            error: "Connection to the server failed due to internet connection",
+          );
+        case DioExceptionType.receiveTimeout:
+          return ApiErrorModel(
+            error: "Receive timeout in connection with the server",
+          );
+        case DioExceptionType.sendTimeout:
+          return ApiErrorModel(
+            error: "Send timeout in connection with the server",
+          );
+        case DioExceptionType.badResponse:
+          return _handleError(error.response?.data);
+        default:
+          return ApiErrorModel(error: "Something went wrong");
+      }
+    } else {
+      return ApiErrorModel(error: "Unknown error occurred");
+    }
+  }
+}
+
+ApiErrorModel _handleError(dynamic data) {
+  try {
+    if (data is Map<String, dynamic>) {
+      if (data.containsKey('error')) return ApiErrorModel(error: data['error']);
+      if (data.containsKey('message')) {
+        return ApiErrorModel(error: data['message']);
+      }
+      if (data['error'] is Map && data['error'].containsKey('message')) {
+        return ApiErrorModel(error: data['error']['message']);
+      }
+    }
+  } catch (_) {}
+  return ApiErrorModel(error: "Unknown error occurred");
+}

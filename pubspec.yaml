@@ -1,0 +1,26 @@
+name: error
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  dio: ^5.8.0+1
+  json_annotation: ^4.8.1
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.7
+  freezed: ^2.5.7
+  injectable_generator: ^2.3.0
+  intl_utils: ^2.5.0
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+flutter:
